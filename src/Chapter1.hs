@@ -463,7 +463,7 @@ next x = x + 1
 
 -- DON'T FORGET TO SPECIFY THE TYPE IN HERE
 lastDigit :: Int -> Int
-lastDigit n = mod n 10
+lastDigit n = mod (abs n) 10
 
 -- |
 -- =⚔️= Task 6
@@ -491,7 +491,7 @@ lastDigit n = mod n 10
 -- 👩‍🔬 Due to lazy evaluation in Haskell, only the expression from the branch
 --   satisfying the check will be returned and, therefore, evaluated.
 closestToZero :: Int -> Int -> Int
-closestToZero x y = if (abs x) < (abs y) then x else y
+closestToZero x y = if abs x < abs y then x else y
 
 -- |
 -- =⚔️= Task 7
@@ -530,6 +530,7 @@ mid x y z
   | x == y = x -- if two values are equal, one of the equal ones will be the mid
   | y == z = y -- if two values are equal, ...
   | z == x = z -- if two values are equal, ...
+  | otherwise = z
 
 -- |
 -- =⚔️= Task 8
@@ -612,13 +613,13 @@ specifying complex expressions.
 -}
 
 sumLast2 :: Int -> Int
-sumLast2 n = (getLast n) + (secondLast n)
+sumLast2 n = getLast n + secondLast n
   where
     getLast :: Int -> Int
-    getLast number = mod number 10
+    getLast number = mod (abs number) 10
 
     secondLast :: Int -> Int
-    secondLast number = getLast (div number 10)
+    secondLast number = getLast (div (abs number) 10)
 
 -- |
 -- =💣= Task 10*
@@ -638,6 +639,7 @@ sumLast2 n = (getLast n) + (secondLast n)
 -- aren't ready for this boss yet!
 firstDigit :: Int -> Int
 firstDigit n
+  | n < 0 = firstDigit (abs n)
   | n > 9 = firstDigit (dropLastDigit n)
   | otherwise = n
   where
